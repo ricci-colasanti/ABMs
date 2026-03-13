@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+
+    <title>Bhar</title>
+
+    <style>
+         
+      canvas {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        display: block;
+        width: 300px;
+        height: 300px;
+      }
+    
+    </style>
+  </head>
+
+  <body>
+   
+    
+    <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/PyHASE/">PHASE</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbardrop"
+                data-toggle="dropdown"
+              >
+                Models
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/PyHASE/Auchincloss/Auchincloss.html"
+                  >Auchincloss</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Axelrod/Axelrod.html"
+                  >Axelrod</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Bhar/Bhar.html"
+                  >Bhar</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="/PyHASE/Gorman/Gorman.html"
+                  >Gorman</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Schelling/Schelling.html"
+                  >Schelling</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="/PyHASE/WattsStrogatz/WattsStrogatz.html"
+                  >Watts & Strogatz</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container" style="margin-top: 80px">
+      <!-- <a href="#test">test</a>  -->
+      
+        <h2>Exploiting Social Networks to Mitigate the Obesity Epidemic</h2>
+        <div class="ref">
+          Bahr, David B., et al. "Exploiting social networks to mitigate the
+          obesity epidemic." Obesity 17.4 (2009): 723-728.
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-7">
+            
+
+            
+              <p text-align="center">
+                <canvas id="canvas" width="280" height="280"></canvas>
+              </p>
+              
+           
+
+     
+            <div class="form-check">
+              <div class="slidecontainer">
+                <div class="row">
+                  <div class="col">
+                    <span
+                      style="color: rgb(0, 255, 0); background-color: black"
+                    >
+                      &#9679;</span
+                    >
+                    Healthy
+                  </div>
+                  <div class="col">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value="30"
+                      class="slider"
+                      id="healthy"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span style="color: DodgerBlue; background-color: black">
+                      &#9679;</span
+                    >
+                    Over
+                  </div>
+                  <div class="col">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value="30"
+                      class="slider"
+                      id="over"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span style="color: red; background-color: black">
+                      &#9679;</span
+                    >
+                    Obese
+                  </div>
+                  <div class="col">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value="30"
+                      class="slider"
+                      id="obese"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Random links</div>
+                  <div class="col">
+                    <input
+                      type="range"
+                      min="0"
+                      max="3000"
+                      value="0"
+                      class="slider"
+                      id="rlinks"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Speed</div>
+                  <div class="col">
+                    <input
+                      type="range"
+                      min="1"
+                      max="100"
+                      value="2"
+                      class="slider"
+                      id="speed"
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="check1"
+                name="option1"
+                unchecked
+              />
+              <label class="form-check-label"
+                >Lock 50
+                <span style="color: rgb(0, 255, 0); background-color: orange">
+                  &#9679;</span
+                >
+                healthy</label
+              >
+            </div>
+
+            <br />
+            <div class="row">
+              <div class="col" align="center">
+                <button id="setup" class="btn btn-primary mt-3">Setup</button>
+              </div>
+              <div class="col" align="center">
+                <button id="run" class="btn btn-primary mt-3">Run</button>
+              </div>
+              <div class="col" align="center">
+                <button id="stop" class="btn btn-primary mt-3">Stop</button>
+              </div>
+            </div>
+          </div>
+          
+            <div class="col-sm-5" style="border-style: solid; border-width: 0.5px;">
+              <div id="myPlot" style="width: 100%; max-width: 700px">
+              </div>
+            </div>
+       
+        </div>
+        <br>
+        <div class=""row">
+          <div class="col-sm-12">
+            <div id="accordion">
+              <div class="card">
+                <div class="card-header">
+                  <a class="card-link" data-toggle="collapse" href="#collapsea">
+                    What is this?
+                  </a>
+                </div>
+                <div
+                  id="collapsea"
+                  class="collapse show"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>This is a model of how a person's "real" social network affects both their weight and the overall health of the population. Here we have people (agents) located on a grid and interacting with their immediate neighbours. The agents follow the eating behaviour of the majority of their neighborus. Altering the network and/or the type of connections (see Watts and Strogatz model example) changes the dynamic of the health of the whole population.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="card-link"
+                    data-toggle="collapse"
+                    href="#collapseOne"
+                  >
+                    Why is this a good example?
+                  </a>
+                </div>
+                <div
+                  id="collapseOne"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      This is a good model to explore and understand network theory 2]. One of the most important features of an agent-based model (ABM) is the way in which the agents interact with each other. In this model social networks within a population are created by forming links between agents. The agent-to-agent links represent connections between a person and their friends. In this model this friendship network is used to simulate the effect that a person's friends have on their body weight. This abstract model shows that the structure of this friendship network is very important in determining population level patterns of behaviour.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseTwo"
+                  >
+                    What is the NCD prevention challenge being addressed?
+                  </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                  <div class="card-body">
+                    <p>TThis model is concerned with obesity. Between 1971 and 2003, the population of the city of Framingham was part of a cardiac health study where 12,067 people's health data were repeatedly collected. A long-term analysis of weight data and the social network the population by Christakis and Fowler [1] showed that a person’s chances of becoming obese increased by almost 70% if they had a friend who became obese. In this study by Christakis and Fowler, the social network describes the relationships between people including friends, family and co-workers. Each person can be thought of as node within the network and the relationships as links between the nodes. Networks of nodes and links are found throughout nature and society. A branch of mathematics called network theory [2] can be applied to these networks to identify common patterns and behaviours. Using network theory, artificial networks of social interactions can be constructed that have the same important characteristics of real social networks. These artificial networks can then be used to simulate how obesity spreads among social networks and to test the effectiveness of different weight management interventions on reducing obesity at the population level.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseThree"
+                  >
+                    How is ABM suited to address this challenge?
+                  </a>
+                </div>
+                <div
+                  id="collapseThree"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      The Bhar paper shows that behaviour presented at the population level is dependent on the nature of the interactions at the individual level. An ABM allows you to model a range of personal interactions and observe how these affect the behaviour of the population as a whole. A small change in individual behaviour can result in a totally different outcome at the population level. This type of behaviour is known as a “phase change”. Mathematical or statistical models of whole populations are less good at capturing this type of behaviour. In the context of the management of obesity this means we can test different individual-level interventions and see how the effects propagate across the population.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseFour"
+                  >
+                    What are the key components of the model?
+                  </a>
+                </div>
+                <div
+                  id="collapseFour"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      The simulation recreated here models a population of individual agents (people) that are represented as different coloured dots on the grid. Each agent can be in one of three weight states: healthy weight (<span
+                        style="color: green"
+                        >green</span
+                      >)over weight (<span style="color: blue">blue</span>) and
+                      obese (<span style="color: red">red</span>).. In this version of the Bhar model each agent occupies an individual space on a 40 by 40 grid. Each agent has a social network consisting of the agent’s eight immediate neighbours on the grid. As the model runs, at each iteration step an agent will change its weight state to match that of the majority of its social network neighbours (i.e. the surrounding agents on the grid).
+                    </p>
+                    <p>
+                      Because the agents are linked together in a grid-like network, it means that each agent has two friends in common with every other agent in their social network, although note that these will be two different friends for each agent within the social network. This results in a network that has a high clustering coefficient with agents likely to take on the weight-state of their neighbours . The effect of this can be seen in the relatively stable clustering of weight type when the simulation is run. The number of common friends, and thus the clustering coefficient can be reduced by adding random links within the model so that each agent is also connected to other agents who are not next to them in the grid.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseFive"
+                  >
+                    How does the model work?
+                  </a>
+                </div>
+                <div
+                  id="collapseFive"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      Click the Setup button, which will assign each agent to an individual space on the 40 by 40 grid. Each agent then makes a friendship link with its eight closest neighbours. Additional friendship links can be made to random members of the population. The number of such links is controlled by the random links slider. The top three sliders in the model (Healthy, Overweight, and Obese) determine the proportion of the population assigned to one of the three weight states at the model setup: healthy weight(<span
+                        style="color: green"
+                        >green</span
+                      >) over weight (<span style="color: blue">blue</span>) and
+                      obese (<span style="color: red">red</span>).
+                    </p>
+                    <p>
+                      To run the model, click on the Run button. The model will run until there is no change runs at can be altered with the Speed slider. You can change the initial conditions by changing the values of the sliders and then clicking the Setup followed by the Run button
+                    </p>
+                    <p>
+                      If you run the model a few times you will note that the outcomes will not always be the same. This is because the initial distribution of agents and types has a random element in it
+                    </p>
+                    <p>
+                      The aim of the model is to demonstrate the effect that
+                      social network structure has on population behaviour. Try
+                      running the model a few times after making each of the
+                      following adjustments:
+                    </p>
+
+                    <h6>&#9679; No random links between agents</h6>
+                    <p>
+                      With no random links, there are many common friends and
+                      you can see strong clustering in weight behaviours.
+                      Friends influence friends and where there are common
+                      friends, a group behaviour is reinforced.
+                    </p>
+
+                    <h6>&#9679; Select Lock 50 healthy</h6>
+                    <p>
+                      When you choose 50 healthy people and lock their weight
+                      type to being constant for all of the simulation the group
+                      reinforcement can be seen more clearly. These healthy
+                      individuals act as group centres and help maintain healthy
+                      group behaviour.
+                    </p>
+
+                    <h6>
+                      &#9679; Increase the number of random links between agents
+                    </h6>
+                    <p>
+                      You see that group cohesion and clustering coefficient is
+                      reduced by adding random links and the effect of locking
+                      in 50 individuals is greatly reduced.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseSeven"
+                  >
+                    What are the implications of these findings for policy or
+                    practice?
+                  </a>
+                </div>
+                <div
+                  id="collapseSeven"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      This is an abstract model: people don't vote with their
+                      friends as to what weight they should be, and social
+                      networks are not as uniform in real life as they are in
+                      this version of the Bhar model. Also, fixing a set number
+                      of people at a healthy weight will not solve the obesity
+                      epidemic. What this model does show is the qualitative
+                      effect that social networks have on group behaviour and
+                      this is just the type of behaviour documented by
+                      Christakis and Fowler. The model presented here is just
+                      one version of the models outlined in the full Bhar et al
+                      paper where the authors explore a wider range of social
+                      network structures and differing methods that influence
+                      the majority state of each agent’s social network
+                      neighbours.
+                    </p>
+                    <p>
+                      What this model and the Bhar et al paper show is that
+                      weight regulation is not solely an individual act and that
+                      any intervention to help people regulate their weight
+                      needs to take social connections into account. One of the
+                      interventions looked at in the Bhar et al paper is dieting
+                      with friends. More realistic models have been created from
+                      both the Bhar et al and the Christakis and Fowler papers.,
+                      For example Giabbanelli et al. applied network theory to
+                      generate artificial social networks. They include a simple
+                      model of human metabolism and simulated how individuals
+                      influence each other with respect to food consumption and
+                      physical activity. They applied their model to both
+                      synthetic and real-world populations and demonstrated the
+                      importance of the structural properties of each
+                      individual’s social network on the distribution of body
+                      mass and obesity at the population level. In another
+                      example by Shi et al a networked ABM was created with an
+                      age and height structured metabolic model to investigate
+                      weight loss interventions in a real Chinese population.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <a
+                    class="collapsed card-link"
+                    data-toggle="collapse"
+                    href="#collapseEight"
+                  >
+                    Links
+                  </a>
+                </div>
+                <div
+                  id="collapseEight"
+                  class="collapse"
+                  data-parent="#accordion"
+                >
+                  <div class="card-body">
+                    <p>
+                      [1]Christakis, Nicholas A., and James H. Fowler. "The
+                      spread of obesity in a large social network over 32
+                      years." New England journal of medicine 357.4 (2007):
+                      370-379.
+                    </p>
+                    <p>
+                      [2]Christakis, Nicholas A., and James H. Fowler.
+                      Connected: The surprising power of our social networks and
+                      how they shape our lives. Little, Brown Spark, 2009.
+                    </p>
+                    <p>
+                      [3]Giabbanelli, Philippe J., et al. "Modeling the
+                      influence of social networks and environment on energy
+                      balance and obesity." Journal of Computational Science
+                      3.1-2 (2012): 17-27.
+                    </p>
+                    <p>
+                      [4]Mahmood, Syed S., et al. "The Framingham Heart Study
+                      and the epidemiology of cardiovascular disease: a
+                      historical perspective." The lancet 383.9921 (2014):
+                      999-1008.
+                    </p>
+                    <p>
+                      [5]Shi, Liuyan, Liang Zhang, and Yun Lu. "Evaluating
+                      social network-based weight loss interventions in Chinese
+                      population: An agent-based simulation."Plos one 15.8
+                      (2020): e0236716.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/ABM.js"></script>
+
+    <script src="js/bhar.js"></script>
+  </body>
+</html>

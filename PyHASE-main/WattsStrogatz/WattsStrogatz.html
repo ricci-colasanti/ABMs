@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+
+    <title>Watts & Strogatz</title>
+  </head>
+
+  <body>
+    
+  <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/PyHASE/">PHASE</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbardrop"
+              data-toggle="dropdown"
+            >
+              Models
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/PyHASE/Auchincloss/Auchincloss.html"
+                >Auchincloss</a
+              >
+              <a class="dropdown-item" href="/PyHASE/Axelrod/Axelrod.html"
+                >Axelrod</a
+              >
+              <a class="dropdown-item" href="/PyHASE/Bhar/Bhar.html"
+                >Bhar</a
+              >
+              <a
+                class="dropdown-item"
+                href="/PyHASE/Gorman/Gorman.html"
+                >Gorman</a
+              >
+              <a class="dropdown-item" href="/PyHASE/Schelling/Schelling.html"
+                >Schelling</a
+              >
+              <a
+                class="dropdown-item"
+                href="/PyHASE/WattsStrogatz/WattsStrogatz.html"
+                >Watts & Strogatz</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+
+    <div class="container" style="margin-top: 80px">
+      <!-- <a href="#test">test</a>  -->
+      <h2>Infections on a "Small World" Model</h2>
+      <div class="ref">
+        Watts, Duncan J., and Steven H. Strogatz. "Collective dynamics of
+        ‘small-world’networks." nature 393.6684 (1998): 440-442.
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-7">
+          <canvas id="canvas" width="400" height="400"></canvas>
+
+          <div class="row">
+            <div class="col">R</div>
+
+            <div class="col">
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="60"
+                class="slider"
+                id="R"
+                onchange="setVals()"
+              />
+            </div>
+            <div class="col">
+              <span id="Rlable">0.6</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">Links</div>
+
+            <div class="col">
+              <input
+                type="range"
+                min="0"
+                max="50"
+                value="0"
+                class="slider"
+                id="links"
+                onchange="setVals()"
+              />
+            </div>
+            <div class="col">
+              <span id="linkslable">0.000</span>
+            </div>
+          </div>
+
+          <br />
+          <button class="btn btn-primary tablinks" onclick="reset()">
+            Reset
+          </button>
+
+          <button id="running" class="btn btn-primary tablinks" onclick="run()">
+            Run
+          </button>
+        </div>
+        <div class="col-sm-5" style="border:solid; border-width:0.5px; ">
+          <div id="myPlot" style="width: 100%; max-width: 700px"></div>
+        </div>
+        </div>
+        <br>
+        <br>
+        <div class=""row">
+        <div class="col-sm-12">
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapsea">
+                  What is this?
+                </a>
+              </div>
+              <div
+                id="collapsea"
+                class="collapse show"
+                data-parent="#accordion"
+              >
+                <div class="card-body">
+                  <p>This is a model that demonstrates Watts and Strogatz small world network. People (agents) occupy a place on a grid. Each agent is linked to its immediate neighbours. We use an epidemiological model to show that adding a few random long-distance links to other agents on the grid drastically changes the behaviour of a simulated infection.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                  Why is this a good example?
+                </a>
+              </div>
+              <div
+                id="collapseOne"
+                class="collapse "
+                data-parent="#accordion"
+              >
+                <div class="card-body">
+                  <p>
+                    One of the modelling methods that is complementary to agent based modelling (ABM) in complex systems science are network models. Two of the pioneers of modern network modelling were Duncan Watts and Steven Strogatz. Among their contributions to modelling was the small world network. This model gives one possible explanation for the famous six degrees of separation. In the 1960’s the social psychologist Stanley Milgram tried to get letters sent to random people in the USA by people passing on the letter to people they personally knew who may be closer to the target then they were. The results showed that on average it took just six intermediate people to pass on the letter. If our connections to other people were just random then the number of intermediates required for people to pass on the letter would be much higher. Watts and Strogatz’s small world model posited that connections that are locally made but with the occasional link to someone more distant would account for the behaviour seen by Milgram. The connections between agents (people) are important to understanding emergent social behaviour. We have all recently experienced this with the spread of COVID19. In this demonstration we use a simple ABM combined with the small world network model to show the effect of long distance links on the spread of an infectious disease.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseTwo"
+                >
+                  What is the NCD prevention challenge being addressed?
+                </a>
+              </div>
+              <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    The same model that can be used to model disease spread can
+                    be applied to the spread of influence. This is seen in our
+                    example of the Bhar model of the social influence on diet:
+                    the behaviour presented at the population level is dependent
+                    on the nature of the interactions at the individual level.
+                    Networks are found throughout nature and society. Despite
+                    their apparent random appearance network theory can be
+                    applied to these networks to identify common patterns and
+                    behaviours. Using network theory, artificial networks of
+                    social interactions can be constructed that have the same
+                    important characteristics of real social networks. These
+                    artificial networks can then be used in models with the
+                    assurance that they will behave in the same way as real
+                    social networks found in society
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseThree"
+                >
+                  How is ABM suited to address this challenge?
+                </a>
+              </div>
+              <div id="collapseThree" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    As previously stated network models are another modelling
+                    type used in complex systems science. Adding an ABM to a
+                    network model makes it easier to incorporate geographical
+                    position and allows individual agent’s (people’s) behaviour
+                    rules to be included in the model. This is particularly
+                    important when modelling emergent social behaviour.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseFour"
+                >
+                  What are the key components of the model?
+                </a>
+              </div>
+              <div id="collapseFour" class="collapse" data-parent="#accordion">
+                <div class="card-body"></div>
+              </div>
+            </div> -->
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseFive"
+                >
+                  How does the model work?
+                </a>
+              </div>
+              <div id="collapseFive" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    Each agent can be in one of three states: susceptible to
+                    disease (green
+                    <span style="color: rgba(0, 255, 0)">&#9679;</span>),
+                    Infectious( ill, red
+                    <span style="color: rgba(255, 0, 0)">&#9679;</span>)
+                    ,Recovered ( but not susceptible,orange
+                    <span style="color: #b1e3ff">&#9679;</span>)
+                    Each agent is connected to eight other agents: the members of its social network. Initially each agent is linked to its eight immediate neighbours on the grid. A random agent is chosen to develop the disease and it then potentially infects the other agents it is linked to with a given probability. This is the now famous “R” number. The agent remains ill and infectious for a set number of days at which point it recovers. In this state the agent will not catch the disease again. This recovered state lasts for a set time. At the end of that time the agent is then susceptible again
+                  </p>
+                  <p>
+                    When the model has only local links the disease spreads as a single wave across the population. You can alter this behaviour by creating a “small world”. Here you add
+                    links between random agents with the links slider. The number on the links slider represents the probability that a single local link will be replaced by a random link to another part of the grid. These links are shown as a blue line. When the model is reset using the reset button you will see that the disease now has multiple spatial and temporal waves.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseSeven"
+                >
+                  What are the implications of these findings for policy or
+                  practice?
+                </a>
+              </div>
+              <div id="collapseSeven" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    The influence of social networks has been seen in a number of models focussed on NCD prevention. For example, in the Framingham heart study the relationships described by Christakis and Fowler are friends, family and coworkers and an individual propensity to obesity is seen to be influenced by the nature of these connections. This is also seen in our Bhar diet model example. Investigators such as Giabbanelli and Shi have also used this knowledge of networks to test out different weight loss intervention strategies targeting the most connected individuals.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseEight"
+                >
+                  Links
+                </a>
+              </div>
+              <div id="collapseEight" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    Christakis, Nicholas A., and James H. Fowler. "The spread of
+                    obesity in a large social network over 32 years." New
+                    England journal of medicine 357.4 (2007): 370-379
+                  </p>
+                  <p>
+                    Giabbanelli, Philippe J., et al. "Modeling the influence of
+                    social networks and environment on energy balance and
+                    obesity." Journal of Computational Science 3.1-2 (2012):
+                    17-27.
+                  </p>
+                  <p>
+                    Shi, Liuyan, Liang Zhang, and Yun Lu. "Evaluating social
+                    network-based weight loss interventions in Chinese
+                    population: An agent-based simulation."Plos one 15.8 (2020):
+                    e0236716.
+                  </p>
+                  <p>
+                    Watts, Duncan J., and Steven H. Strogatz. "Collective
+                    dynamics of ‘small-world’networks." nature 393.6684 (1998):
+                    440-442.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ABM.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="js/wattsstrogatz.js"></script>
+  </body>
+</html>

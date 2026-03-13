@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>PyHASE</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="img/life.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .bgTextBox {
+      background-color: rgb(241, 241, 241);
+      padding: 10px;
+    }
+
+    .bgDemo {
+      border-style: solid;
+      border-width: 0.5px;
+      padding: 10px;
+    }
+
+    .highlight pre {
+      white-space: pre-wrap;
+    }
+
+    .nav-item {
+      cursor: pointer;
+    }
+
+    .ref {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: x-small;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body ng-app="rlcApp">
+
+  <nav class="navbar navbar-expand-md bgTextBox navbar-light alien">
+    <!-- Brand -->
+    <a class="navbar-brand alien" href="../index.html"><img src="../img/life.png" alt="logo" style="width:40px;"> PyHASE
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Code
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="../pages/life.html">Life</a>
+            <a class="dropdown-item" href="../pages/diffuse.html">Diffuse</a>
+            <a class="dropdown-item" href="../pages/agent.html">Agent</a>
+            <a class="dropdown-item" href="../pages/ant.html">Ant</a>
+            <a class="dropdown-item" href="../pages/abm.html">ABM</a>
+          </div>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <h2>Ant</h2>
+    <p>
+      An implementation of Langton's ant
+    </p>
+    <br>
+    <div class="row">
+
+      <div class="col-sm-4">
+        <img src="../img/ant.png" width="100%">
+
+      </div>
+
+
+      <div class="col-sm-8 bgTextBox">
+          <pre>
+            <code>
+  # Loads the ABM library
+  import ABM
+
+  #Sets the size of the window
+  WIDTH = 600
+  HEIGHT = 600
+
+  # Create a new simulation of grid size 120 X 120 cells
+  # Set the variable in each cell of as "signal" and set value to 0
+  world = ABM.World(120, ["signal"],[0],n_type=4)
+  # add an agent
+  world.addAgent(60,60,color='red')
+
+  # This function "update" is run every iteration by the ABM simulation
+  def update():
+      #sleep
+      ABM.frame = 0.0001
+
+      # loop through all agents
+      for agent in world.agents:
+          # what is the signle at the cell that agent occupies
+          state = agent.getState("signal")
+          if state == 1:
+              agent.setState("signal",0)
+              agent.right()
+          else:
+              agent.setState("signal",1)
+              agent.left()
+
+      #Draw the world with squares that have their "signal" variable set to 1
+      ABM.draw(screen, world, "signal", 1,discreet=True)
+
+
+  #Start the simulation
+  ABM.go()
+            </code>
+        </pre>
+      </div>
+
+    </div>
+    <br>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

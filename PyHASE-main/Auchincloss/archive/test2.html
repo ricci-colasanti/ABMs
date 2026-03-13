@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="display"></div>
+    <script src="js/auchincloss.js"></script>
+    <script>
+      function rndInt(maxVal) {
+        return Math.floor(Math.random() * maxVal);
+      }
+
+      class CPos {
+        constructor(xPos, yPos) {
+          this.xPos = xPos;
+          this.yPos = yPos;
+        }
+
+        move(dx, dy) {
+          this.xPos += dx;
+          this.yPos += dy;
+        }
+
+        dx(point) {
+          return this.xPos - point.xPos;
+        }
+        dy(point) {
+          return this.yPos - point.yPos;
+        }
+      }
+
+      class Cell {
+
+        constructor(pos, ctype) {
+          this.pos = pos;
+
+          this.home = SVG("rect");
+          if (ctype == 0) {
+            this.home.setAttribute("fill", "rgba(255,0,0,0.3)");
+          } else if (ctype == 1) {
+            this.home.setAttribute("fill", "rgba(0,0,255,0.3)");
+          } else {
+            this.home.setAttribute("fill", "rgba(0,0,0,0.3)");
+          }
+          this.home.setAttribute("x", this.pos.xPos);
+          this.home.setAttribute("y", this.pos.yPos);
+          this.home.setAttribute("height", 10);
+          this.home.setAttribute("width", 10);
+        }
+
+        distance(target) {
+          let dx = Math.abs(this.pos.xPos - target.pos.xPos);
+          let dy = Math.abs(this.pos.yPos - target.pos.yPos);
+          const d = Math.sqrt((dx * dx) + (dy * dy));
+          return d
+          if (d == 0) {
+            return 1;
+          }
+          return 1 - d / (maxSize * 10);
+        }
+      
+    }
+
+      var frame = SVG("svg");
+      frame.setAttribute("width", "400");
+      frame.setAttribute("height", "400");
+      frame.setAttribute("border-style", "solid");
+      frame.setAttribute("id", "svg02");
+      var container = document.getElementById("display");
+      container.appendChild(frame);
+      const size = 10;
+      const maxSize = Math.sqrt(size * size + size * size);
+      cells = [];
+      let t1;
+      let t2;
+      for (let x = 0; x < size; x++) {
+        for (let y = 0; y < size; y++) {
+          const p = new CPos(x * 10, y * 10);
+
+          let c;
+
+          if (x == 2 && y == 2) {
+            c = new Cell(p, 3);
+            t1 = c;
+            console.log(c.pos,t1.pos);
+          } else if (x == 7 && y == 7) {
+            c = new Cell(p, 3);
+            t2 = c;
+          } else {
+            c = new Cell(p, rndInt(2));
+          }
+          cells.push(c);
+          frame.append(c.home);
+        }
+      }
+      //console.log(t2.pos.xPos,t2.pos.yPos);
+      //console.log(t1.pos.xPos,t1.pos.yPos);
+        for (let i = 0; i < cells.length; i++) {
+        // if (cells[i].pos.xPos > 50) {
+          let a = cells[i].distance(t1)
+          let b = cells[i].distance(t2)
+          //console.log(a,b)
+          if(a>b){
+            cells[i].home.setAttribute("fill", "rgba(255,2550,0,0.3)");
+          }
+        // }
+        //if((cells[i].pos.xPos==80)&&(cells[i].pos.yPos==80)){
+            // if(cells[i].distance(t1)<cells[i].distance(t2)){
+            //     if(t1!=cells[i]){
+            //         cells[i].home.setAttribute("fill", "rgba(255,255,0,0.3)");
+            //     }
+            // }else{
+            //     if(t2!=cells[i]){
+            //         cells[i].home.setAttribute("fill", "rgba(255,0,255,0.3)");
+            //     }
+            // }
+            //}
+      }
+    </script>
+  </body>
+</html>

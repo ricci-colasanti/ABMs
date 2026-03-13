@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>PyHASE</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="img/life.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .bgTextBox {
+      background-color: rgb(241, 241, 241);
+      padding: 10px;
+    }
+
+    .bgDemo {
+      border-style: solid;
+      border-width: 0.5px;
+      padding: 10px;
+    }
+
+    .highlight pre {
+      white-space: pre-wrap;
+    }
+
+    .nav-item {
+      cursor: pointer;
+    }
+
+    .ref {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: x-small;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body ng-app="rlcApp">
+
+  <nav class="navbar navbar-expand-md bgTextBox navbar-light alien">
+    <!-- Brand -->
+    <a class="navbar-brand alien" href="../index.html"><img src="../img/life.png" alt="logo" style="width:40px;"> PyHASE
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Code
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="../pages/life.html">Life</a>
+            <a class="dropdown-item" href="../pages/diffuse.html">Diffuse</a>
+            <a class="dropdown-item" href="../pages/agent.html">Agent</a>
+            <a class="dropdown-item" href="../pages/ant.html">Ant</a>
+            <a class="dropdown-item" href="../pages/abm.html">ABM</a>
+          </div>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <h2>Life</h2>
+    <p>
+      Conway's Game of Life
+    </p>
+    <br>
+    <div class="row">
+
+      <div class="col-sm-4">
+        <img src="../img/Life.png" width="100%">
+
+      </div>
+
+
+      <div class="col-sm-8 bgTextBox">
+          <pre>
+            <code>
+  # Loads the ABM library
+  import ABM
+  
+  #Sets the size of the window
+  WIDTH = 600
+  HEIGHT = 600
+  
+  # Create a new simulation of grid size 80 X 80 cells
+  # Set the variable in each cell of as "live"
+  world = ABM.World(80, ["live"],[0])
+  
+  # Set the live variable of an individual cell at the grid coordinate of 35 34  to 1
+  world.setCell(35, 34, "live", 1)
+  world.setCell(35, 35, "live", 1)
+  world.setCell(35, 36, "live", 1)
+  world.setCell(34, 35, "live", 1)
+  world.setCell(36, 36, "live", 1)
+  #Update the world
+  world.update()
+  
+  # This function "update" is run every iteration by the ABM simulation
+  def update():
+      # For every cell in the simulation grid
+      for cell in world.cells:
+          # Count the number of immediate neighbours that have their "live" variable set to 1
+          count = cell.count("live", 1)
+  
+          # The game of life rules
+          if cell.isState("live", 1):
+              if count == 2 or count == 3:
+                  cell.setState("live", 1)
+              else:
+                  cell.setState("live", 0)
+          else:
+              if count == 3:
+                  cell.setState("live", 1)
+              else:
+                  cell.setState("live", 0)
+      #Update the world
+      world.update()
+      #Draw the world with squares that have their "live" variable set to 1
+      ABM.draw(screen, world, "live", 1,discreet=True)
+  
+      # Uncomment the line below to output number of live cells
+      # print((world.countAll("live",1),0))
+  
+  #Start the simulation
+  ABM.go()
+            </code>
+        </pre>
+      </div>
+
+    </div>
+    <br>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

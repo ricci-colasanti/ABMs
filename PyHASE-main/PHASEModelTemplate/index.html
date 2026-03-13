@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>PHASE model repository</title>
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/glider.png">
+    <link rel="shortcut icon" href="img/glider.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        .bgTextBox {
+            background-color: rgb(241, 241, 241);
+            padding: 10px;
+        }
+
+        .bgDemo {
+            border-style: solid;
+            border-width: 0.5px;
+            padding: 10px;
+        }
+
+        .highlight pre {
+            white-space: pre-wrap;
+        }
+
+        .nav-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body ng-app="rlcApp">
+
+    <nav class="navbar navbar-expand-md bgTextBox navbar-light">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#/!">PHASE model repository </a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbardrop1" data-toggle="dropdown">
+                        Models
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#!template">Template</a>
+                        <a class="dropdown-item" href="#!test">Hold </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div ng-view></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+
+    <script>
+        var app = angular.module("rlcApp", ["ngRoute"]);
+        app.config(function ($routeProvider) {
+            $routeProvider
+                .when("/", {
+                    templateUrl: "partials/main.html"
+                })
+                .when("/template", {
+                    templateUrl: "partials/PHASEModelTemplate.html"
+                })
+                .when("/test", {
+                    templateUrl: "partials/test.html"
+                });
+        });
+    </script>
+</body>
+
+</html>

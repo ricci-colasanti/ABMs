@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+
+    <style>
+      canvas {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 300px;
+        height: 300px;
+      }
+    </style>
+    <title>Axelrod</title>
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/PyHASE/">PHASE</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbardrop"
+                data-toggle="dropdown"
+              >
+                Models
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/PyHASE/Auchincloss/Auchincloss.html"
+                  >Auchincloss</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Axelrod/Axelrod.html"
+                  >Axelrod</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Bhar/Bhar.html"
+                  >Bhar</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="/PyHASE/Gorman/Gorman.html"
+                  >Gorman</a
+                >
+                <a class="dropdown-item" href="/PyHASE/Schelling/Schelling.html"
+                  >Schelling</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="/PyHASE/WattsStrogatz/WattsStrogatz.html"
+                  >Watts & Strogatz</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="margin-top: 80px">
+      <!-- <a href="#test">test</a>  -->
+      <h2>The dissemination of culture</h2>
+      <div class="ref">
+        Axelrod, Robert. "The dissemination of culture: A model with local
+        convergence and global polarization." Journal of conflict resolution
+        41.2 (1997): 203-226.
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-sm-7">
+          <canvas id="canvas"></canvas>
+
+          <br /> 
+
+          <div class="row">
+            <div class="col">Features</div>
+            <div class="col">
+              <input
+                type="range"
+                min="3"
+                max="6"
+                value="6"
+                class="slider"
+                id="features"
+                onchange="setVals()"
+              />
+            </div>
+            <div class="col">
+              <span id="featureslable">6</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">Size</div>
+            <div class="col">
+              <input
+                type="range"
+                min="10"
+                max="40"
+                value="10"
+                class="slider"
+                id="size"
+                onchange="setVals()"
+              />
+            </div>
+            <div class="col">
+              <span id="sizelable">10</span>
+            </div>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              name="segragation"
+              value="no"
+              id="similarity"
+              onchange="setDisplay()"
+            />
+            <label>Show similarity</label>
+          </div>
+          <br />
+          <button class="btn btn-primary tablinks" onclick="reset()">
+            Reset
+          </button>
+
+          <button id="running" class="btn btn-primary tablinks" onclick="run()">
+            Run
+          </button>
+
+        </div>
+        <div class="col-sm-5" style="border-style: solid; border-width: 0.5px;">
+          <div class="row" >
+            <div id="myPlot" style="width: 100%; max-width: 700px"></div>
+          </div>
+         
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapsea">
+                  What is this?
+                </a>
+              </div>
+              <div
+                id="collapsea"
+                class="collapse show"
+                data-parent="#accordion"
+              >
+                <div class="card-body">
+                  <p>
+                    This is a model of how culture emerges from people sharing similar opinions, behaviours or fashions. Here each person (agent) is represented by a square. The agent’s opinions, behaviours and fashions are represented by features. The set of features is represented by a colour. The more similar the colour the more similar an agents culture is to another. Each agent interacts with and influences the culture of the agents in their immediate neighbourhood.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                  Why is this a good example?
+                </a>
+              </div>
+              <div id="collapseOne" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    Like Schelling (see Schelling segrataion model example),
+                    Axelrod is a pioneer in the use of agent-based models (ABM)
+                    in social sciences. The Axelrod model looks at the influence
+                    of a person’s social network on the behaviour of an
+                    individual agent(person).In this model each agent’s ideas or
+                    culture can change depending on the influences from it’s
+                    neighbours or “social networks”. Like the Shelling model,
+                    the Axelrod model is a theoretical model that illuminates
+                    the emergent complex behaviours of social networks.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseTwo"
+                >
+                  What is the NCD prevention challenge being addressed?
+                </a>
+              </div>
+              <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    This model does not directly address a non-communicable disease (NCD) challenge, but provides a basis for understanding more complex models of behaviour. As illustrated in our other examples, such as the the Bhar model (social influence on eating) and the Gorman model (social influence on drinking), understanding how people’s behaviours are influenced by their social networks is key to many NCDs.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseThree"
+                >
+                  How is ABM suited to address this challenge?
+                </a>
+              </div>
+              <div id="collapseThree" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    What sets ABMs apart from other modelling methods is global
+                    behaviour emerging from rules that apply across the whole
+                    model but are enacted by individuals based on who they are
+                    linked to, their social network. Influence flows across the
+                    network altering each agent's culture in an iterative manner
+                    to produce both local and global consensus. This dynamic
+                    spatially heterogeneous behaviour of the global culture
+                    would be very hard to model with other methodologies.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseFour"
+                >
+                  What are the key components of the model?
+                </a>
+              </div>
+              <div id="collapseFour" class="collapse" data-parent="#accordion">
+                <div class="card-body"></div>
+              </div>
+            </div> -->
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseFive"
+                >
+                  How does the model work?
+                </a>
+              </div>
+              <div id="collapseFive" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    The Axelrod model is a model of social influence where a person becomes more like a person they are linked to. It models the social convergence of culture.
+                  </p>
+                  <p>
+                    Each agent, or person, is static in its own cell within a two-dimensional matrix. Each agent has four neighbours/contacts within their social network: those directly above, below, to the left and right of the agent within the grid matrix. Note that an agent does not share any other contacts with each of its four contacts.
+                  </p>
+                  <p>
+                    Each agent's culture is represented as a set of 5 features. Each feature is described by a trait, that is a single value between 0 and 9. An agent's similarity to any of its contacts is measured by how many features that each has that have the same trait. For example if agent A has a feature set [5,2,7,4,6] and the agent it contacts above it has the feature set [2,8,7,7,3] then the two agents share the same trait at feature 3 (both are trait 7) so have a similarity of 1⁄5 or 20%.
+                  </p>
+                  <p>
+                    An agent will influence another agent in direct proportion to their similarity. When one agent does influence the other a random feature is chosen and the traits of both the agents for that feature are made equal. So for agent A and agent B above there is a 20% chance they will interact. A's feature set will change from [5,2,7,4,6] to [5,2,7,7,6], a change in feature 2 to match the trait of its neighbour (both now trait 7). Note that there is now a 40% similarity.
+                  </p>
+
+                  <p>
+                    In this simulation the different sets of features are represented by a single colour. Similar feature sets have similar colours. Over a number of iterations the random patchwork of colours converges on blocks of similar colours as groups of agents converge on similar cultures.
+                  </p>
+                  <p>
+                    What is interesting is to see what effect changing the population size the number of iterations and the number of features has on the spatial heterogeneity. This can be done by moving the sliders on the right of the model and re-running the model with the "Reset" button. The patterns formed by the model can be quite mesmeric.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseSeven"
+                >
+                  What are the implications of these findings for policy or
+                  practice?
+                </a>
+              </div>
+              <div id="collapseSeven" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    Two interesting outcomes from the model are: the move to a
+                    common culture in smaller populations and the occurrence of
+                    lockout groups when the number of features that constitute a
+                    culture are small. While this is only a simple theoretical
+                    model it does highlight some possible obstacles that may
+                    occur in both addressing diversity and in changing mindsets.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <a
+                  class="collapsed card-link"
+                  data-toggle="collapse"
+                  href="#collapseEight"
+                >
+                  Links
+                </a>
+              </div>
+              <div id="collapseEight" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <p>
+                    [1] Axelrod, Robert. "The dissemination of culture: A model
+                    with local convergence and global polarization." Journal of
+                    conflict resolution 41.2 (1997): 203-226.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../js/ABM.js"></script>
+    <script src="js/axelrod.js"></script>
+  </body>
+</html>

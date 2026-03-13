@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>PyHASE</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="img/life.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .bgTextBox {
+      background-color: rgb(241, 241, 241);
+      padding: 10px;
+    }
+
+    .bgDemo {
+      border-style: solid;
+      border-width: 0.5px;
+      padding: 10px;
+    }
+
+    .highlight pre {
+      white-space: pre-wrap;
+    }
+
+    .nav-item {
+      cursor: pointer;
+    }
+
+    .ref {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: x-small;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body ng-app="rlcApp">
+
+  <nav class="navbar navbar-expand-md bgTextBox navbar-light alien">
+    <!-- Brand -->
+    <a class="navbar-brand alien" href="../index.html"><img src="../img/life.png" alt="logo" style="width:40px;"> PyHASE
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Code
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="../pages/life.html">Life</a>
+            <a class="dropdown-item" href="../pages/diffuse.html">Diffuse</a>
+            <a class="dropdown-item" href="../pages/agent.html">Agent</a>
+            <a class="dropdown-item" href="../pages/ant.html">Ant</a>
+            <a class="dropdown-item" href="../pages/abm.html">ABM</a>
+          </div>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <h2>Agent</h2>
+    <p>
+      An agent moves to best cell with highest "resource" value
+    </p>
+    <br>
+    <div class="row">
+
+      <div class="col-sm-4">
+        <img src="../img/agent.png" width="100%">
+
+      </div>
+
+
+      <div class="col-sm-8 bgTextBox">
+          <pre>
+            <code>
+  # Loads the ABM library
+  import ABM
+  
+  #Sets the size of the window
+  WIDTH = 600
+  HEIGHT = 600
+  
+  # Create a new simulation of grid size 80 X 80 cells
+  # Set the variable in each cell of as "resource" and set value to 0
+  #world = ABM.World(30, ["resource"],["rnd"])
+  world = ABM.World(30, ["resource"],[0])
+  #set center cell resource to 500
+  world.setCell(15, 15, "resource", 500)
+  #add agent to top left hand corner
+  world.addAgent(1,1)
+  world.update()
+  
+  
+  
+  # This function "update" is run every iteration by the ABM simulation
+  def update():
+      #diffuse resource by 0.5
+      ABM.frame = 0.5
+      world.diffuse("resource",0.5)
+      # loop through all agents
+      for agent in world.agents:
+          # move agent to best local value of variable "resource"
+          agent.moveBest("resource")
+          #agent.moveRandom()
+  
+      world.update()
+      #Draw the world with squares that have their "live" variable set to 1
+      ABM.draw(screen, world, "resource", 1,discreet=False)
+  
+  
+      # Uncomment the line below to output total resource
+      #print((world.sumAll("resource"),0))
+  
+  #Start the simulation
+  ABM.go()
+            </code>
+        </pre>
+      </div>
+
+    </div>
+    <br>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

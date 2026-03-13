@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="js/auchincloss.js"></script>
+    <script>
+      var frame = SVG("svg");
+      frame.setAttribute("width", "400");
+      frame.setAttribute("height", "400");
+      frame.setAttribute("border-style", "solid");
+      frame.setAttribute("id", "svg02");
+
+      var numberOfShops = 2;
+      var weightPrice = 0.2;
+      var weightDistance = 0.5;
+      var weightHabit = 0.1;
+      var weightPreference = 0.2;
+      var random = 0.1;
+      let population = []; // list of agents
+      let shops = [];
+      const size = 10;
+      const maxSize = Math.sqrt(size * size + size * size);
+      const relativeTransportCost = 2;
+      // let numberOfShops = 8;
+      // var weightPrice = 0.8;
+      // var weightDistance = 0.2;
+      // var weightHabit = 0.1;
+      // var weightPreference = 0.2;
+      // var random = 0.3;
+
+      const d = new Date();
+      let time = d.getTime();
+      let count = 0;
+      setup();
+      let length = population.length;
+      console.log(length);
+      for(let i=0; i<length;i++){
+        console.log(i,population[i].pos.xPos,population[i].pos.yPos);
+        let max = 0
+        let shop = null
+        for(let j=0;j<shops.length;j++){
+            let d = shops[j].distance(population[i])
+            if(d>max){
+                max=d
+                shop = shops[j]
+            }
+        }
+        console.log("        ",shop.pos.xPos,shop.pos.yPos,max);      
+      }
+      
+    </script>
+  </body>
+</html>
